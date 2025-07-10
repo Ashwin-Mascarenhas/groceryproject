@@ -1,0 +1,25 @@
+<header class="main-header">
+  <nav class="navbar">
+    <div class="logo">
+      <a routerLink="/products">FreshCart</a>
+    </div>
+    <ul class="nav-links">
+      <li><a routerLink="/products" routerLinkActive="active">Products</a></li>
+      <li><a routerLink="/cart" routerLinkActive="active">Cart</a></li>
+      <li *ngIf="isLoggedIn"><a routerLink="/orders" routerLinkActive="active">Orders</a></li>
+      <li *ngIf="isLoggedIn"><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+      <li *ngIf="isLoggedIn"><a routerLink="/admin" routerLinkActive="active">Admin</a></li>
+      <li *ngIf="!isLoggedIn"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+      <li *ngIf="!isLoggedIn"><a routerLink="/register" routerLinkActive="active">Register</a></li>
+      <li *ngIf="isLoggedIn"><button (click)="logout()" class="logout-btn">Logout</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="main-footer">
+  <div>© 2024 FreshCart. All rights reserved.</div>
+</footer>
