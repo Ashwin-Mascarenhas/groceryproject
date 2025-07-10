@@ -1,0 +1,36 @@
+<div class="home-container">
+  <mat-toolbar color="primary">
+    <span>FreshCart</span>
+    <span class="spacer"></span>
+    <mat-form-field appearance="outline">
+      <mat-label>Search products</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Search...">
+    </mat-form-field>
+  </mat-toolbar>
+
+  <div class="category-filter">
+    <mat-chip-list>
+      <mat-chip *ngFor="let category of categories" [selected]="selectedCategory === category" (click)="onCategoryChange(category)">
+        {{ category }}
+      </mat-chip>
+      <mat-chip [selected]="!selectedCategory" (click)="onCategoryChange('')">All</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="product-grid">
+    <mat-card *ngFor="let product of filteredProducts" class="product-card">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="product.imageUrl || 'https://via.placeholder.com/200'" alt="{{ product.name }}">
+      <mat-card-content>
+        <p>{{ product.shortDescription }}</p>
+        <h3>₹{{ product.price }}</h3>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Add to Cart</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div> 

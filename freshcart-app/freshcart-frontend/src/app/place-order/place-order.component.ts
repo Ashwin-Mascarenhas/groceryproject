@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-place-order',
   standalone: false,
   templateUrl: './place-order.component.html',
-  styleUrl: './place-order.component.scss'
+  styleUrls: ['./place-order.component.scss']
 })
 export class PlaceOrderComponent {
 
