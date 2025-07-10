@@ -1,0 +1,51 @@
+FreshCart Project - How to Run
+=============================
+
+1. Start the Backend (Spring Boot)
+----------------------------------
+- Open a terminal and navigate to the backend directory:
+  cd /c/Users/ASHWIN/Desktop/tcs/Ashwin-main
+
+- Build the backend with Maven:
+  mvn clean install
+
+- Run the Spring Boot application:
+  mvn spring-boot:run
+
+  (Backend will start on http://localhost:8080)
+  (H2 database console: http://localhost:8080/h2-console)
+
+2. Start the Frontend (Angular)
+-------------------------------
+- Open a new terminal window.
+- Navigate to the Angular frontend directory:
+  cd /c/Users/ASHWIN/Desktop/tcs/Ashwin-main/freshcart-app/freshcart-frontend
+
+- Install frontend dependencies (only needed once or after changing dependencies):
+  npm install
+
+- Start the Angular development server:
+  ng serve
+
+  (Frontend will be available at http://localhost:4200)
+
+3. Access the Application
+-------------------------
+- Frontend: http://localhost:4200
+- Backend API: http://localhost:8080/api
+- H2 Console: http://localhost:8080/h2-console
+
+Summary Table
+-------------
+| Step | Directory                                                      | Command(s)                |
+|------|----------------------------------------------------------------|---------------------------|
+| 1    | /c/Users/ASHWIN/Desktop/tcs/Ashwin-main                        | mvn clean install         |
+|      |                                                                | mvn spring-boot:run       |
+| 2    | /c/Users/ASHWIN/Desktop/tcs/Ashwin-main/freshcart-app/freshcart-frontend | npm install           |
+|      |                                                                | ng serve                  |
+
+Notes
+-----
+- Always start the backend first, then the frontend.
+- If you make code changes, restart the relevant server.
+- For any issues, check the terminal output for errors. 
