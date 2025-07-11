@@ -1,0 +1,87 @@
+<div class="cart-container">
+  <mat-toolbar color="primary">
+    <span>Shopping Cart</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="continueShopping()">Continue Shopping</button>
+  </mat-toolbar>
+
+  <div class="cart-content" *ngIf="cartItems.length > 0; else emptyCart">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Cart Items ({{ cartItems.length }})</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-table [dataSource]="cartItems" class="cart-table">
+          <ng-container matColumnDef="image">
+            <mat-cell *matCellDef="let item">
+              <img [src]="item.imageUrl || 'https://via.placeholder.com/50'" [alt]="item.productName" class="product-image">
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-cell *matCellDef="let item">
+              <strong>{{ item.productName }}</strong>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <mat-cell *matCellDef="let item">
+              ₹{{ item.price }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="quantity">
+            <mat-cell *matCellDef="let item">
+              <mat-form-field appearance="outline">
+                <input matInput type="number" [value]="item.quantity" min="1" 
+                       (change)="updateQuantity(item.id, $event.target.value)">
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="subtotal">
+            <mat-cell *matCellDef="let item">
+              ₹{{ item.price * item.quantity }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <mat-cell *matCellDef="let item">
+              <button mat-icon-button color="warn" (click)="removeItem(item.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="['image', 'name', 'price', 'quantity', 'subtotal', 'actions']"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: ['image', 'name', 'price', 'quantity', 'subtotal', 'actions'];"></mat-row>
+        </mat-table>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="cart-summary">
+          <h3>Total: ₹{{ total }}</h3>
+          <button mat-raised-button color="primary" (click)="proceedToCheckout()">
+            Proceed to Checkout
+          </button>
+          <button mat-stroked-button (click)="clearCart()">
+            Clear Cart
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart">
+      <mat-card>
+        <mat-card-content>
+          <h2>Your cart is empty</h2>
+          <p>Add some products to your cart to get started!</p>
+          <button mat-raised-button color="primary" (click)="continueShopping()">
+            Start Shopping
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-template>
+</div> 

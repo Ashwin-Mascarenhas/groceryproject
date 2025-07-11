@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="main-toolbar">
+  <span class="logo" routerLink="/">FreshCart</span>
+  <span class="spacer"></span>
+  
+  <button mat-button routerLink="/products">Products</button>
+  <button mat-button routerLink="/cart">
+    <mat-icon>shopping_cart</mat-icon>
+    Cart
+  </button>
+  
+  <ng-container *ngIf="!isAuthenticated">
+    <button mat-button routerLink="/login">Login</button>
+    <button mat-stroked-button color="accent" routerLink="/register">Sign Up</button>
+  </ng-container>
+  
+  <ng-container *ngIf="isAuthenticated">
+    <button mat-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>account_circle</mat-icon>
+      {{ currentUser?.firstName || 'User' }}
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item routerLink="/profile">Profile</button>
+      <button mat-menu-item routerLink="/orders">Orders</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </ng-container>
+</mat-toolbar>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main> 

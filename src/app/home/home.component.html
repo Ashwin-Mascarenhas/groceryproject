@@ -1,19 +1,26 @@
 <div class="home-container">
   <mat-toolbar color="primary">
-    <span>FreshCart</span>
+    <span>FreshCart Grocery Store</span>
     <span class="spacer"></span>
-    <mat-form-field appearance="outline">
-      <mat-label>Search products</mat-label>
-      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Search...">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search groceries...</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Search fruits, vegetables, dairy...">
+      <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </mat-toolbar>
 
   <div class="category-filter">
+    <h3>Shop by Category</h3>
     <mat-chip-list>
-      <mat-chip *ngFor="let category of categories" [selected]="selectedCategory === category" (click)="onCategoryChange(category)">
+      <mat-chip [selected]="!selectedCategory" (click)="onCategoryChange('')" color="primary">
+        All Items
+      </mat-chip>
+      <mat-chip *ngFor="let category of categories" 
+                [selected]="selectedCategory === category" 
+                (click)="onCategoryChange(category)"
+                color="primary">
         {{ category }}
       </mat-chip>
-      <mat-chip [selected]="!selectedCategory" (click)="onCategoryChange('')">All</mat-chip>
     </mat-chip-list>
   </div>
 
@@ -23,14 +30,48 @@
         <mat-card-title>{{ product.name }}</mat-card-title>
         <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image [src]="product.imageUrl || 'https://via.placeholder.com/200'" alt="{{ product.name }}">
+      
+      <img mat-card-image [src]="product.imageUrl" [alt]="product.name" class="product-image">
+      
       <mat-card-content>
-        <p>{{ product.shortDescription }}</p>
-        <h3>₹{{ product.price }}</h3>
+        <p class="product-description">{{ product.shortDescription }}</p>
+        <div class="product-details">
+          <div class="price-section">
+            <span class="price">₹{{ product.price }}</span>
+            <span class="unit">per {{ product.unit }}</span>
+          </div>
+          <div class="stock-info">
+            <span class="stock" [class.low-stock]="product.stockQuantity < 10">
+              {{ product.stockQuantity > 0 ? 'In Stock' : 'Out of Stock' }}
+            </span>
+          </div>
+        </div>
       </mat-card-content>
+      
       <mat-card-actions>
-        <button mat-raised-button color="primary">Add to Cart</button>
+        <button mat-raised-button color="primary" 
+                (click)="addToCart(product)"
+                [disabled]="product.stockQuantity === 0"
+                class="add-to-cart-btn">
+          <mat-icon>add_shopping_cart</mat-icon>
+          Add to Cart
+        </button>
+        <button mat-stroked-button color="accent" 
+                (click)="buyNow(product)"
+                [disabled]="product.stockQuantity === 0"
+                class="buy-now-btn">
+          Buy Now
+        </button>
       </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div *ngIf="filteredProducts.length === 0" class="no-results">
+    <mat-card>
+      <mat-card-content>
+        <h3>No products found</h3>
+        <p>Try adjusting your search or category filter</p>
+      </mat-card-content>
     </mat-card>
   </div>
 </div> 
